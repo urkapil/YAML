@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    sam-app
+
+    Digital Entitlement RoleAdmin Api
+    
+Globals:
+    Function:
+        Timeout: 3
+    Api:
+    # API Gateway regional endpoints
+        EndpointConfiguration: REGIONAL
+
+
+Resources:
+
+    DigitalEntitlementRoleAdminFunction:
+        Type: AWS::Serverless::Function 
+        Properties:
+            CodeUri: .\target\calculatorRestApp.jar
+            Handler: com.examples.springboot.StreamLambdaHandler::handleRequest
+            Runtime: java8
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    DAI_ENV: local
+                    HOME: \c\Users\ugpe37
+            MemorySize: 3072
+            Policies: AWSLambdaBasicExecutionRole
+            Timeout: 60
+            Events:
+                GetResource:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /{proxy+}
+                        Method: any
+
+Outputs:
+
+    DigitalEntitlementRoleAdminApi:
+      Description: "API Gateway endpoint URL for Prod stage for Digital Entitlement Role Admin function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/entl/roleadmin/"
+    Export:
+      Name
+      

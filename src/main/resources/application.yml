@@ -1,0 +1,53 @@
+
+server:
+  contextPath: /v1
+  port: 8062
+  tomcat:
+    max-threads: 500
+    min-spare-threads: 200 
+endpoints:
+  sensitive: false
+  enabled: true
+  info:
+    sensitive: false
+  health: 
+    sensitive: false
+petclinic:
+  database: hsqldb
+
+spring:
+  application:
+    admin:
+      enabled: false
+  datasource:
+    schema: classpath*:db/${petclinic.database}/schema.sql
+    data:  classpath*:db/${petclinic.database}/data.sql
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org:
+      springframework: INFO
+security:
+  basic:
+    enabled: false
+rs:
+  http:
+    pool:
+      config:
+        max_total: 300
+        max_per_route: 200
+        request_timeout: 5000     # time to wait in requesting a connection from the connection manager
+        connection_timeout: 2000  # time to wait in establishing a connection with the destination
+        socket_timeout:  10000    # time to wait for receving  data from the destination 
+        
+ws:
+  http:
+     pool:
+       config:
+         max_total: 300
+         max_per_route: 200
+       connection:
+         request_timeout: 5000
+     connection_timeout:  2000
+     socket_timeout: 10000
+    
