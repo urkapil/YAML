@@ -29,7 +29,7 @@
 		
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="error" />
+		<level value="info" />
 	</logger>
 
 	<!-- For jdbc query debugging -->
@@ -54,7 +54,7 @@
 		<level value="info" />
 	</logger>
 	<logger name="com.amazonaws.services.dynamodbv2">
-		<level value="info" />
+		<level value="trace" />
 	</logger>
 
 	<root level="info">

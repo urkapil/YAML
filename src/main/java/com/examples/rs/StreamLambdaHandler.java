@@ -21,6 +21,12 @@ public class StreamLambdaHandler implements RequestStreamHandler {
 			System.out.println("environment = " + environmentName);
 			handler = SpringLambdaContainerHandler.getAwsProxyHandler(ExampleApplication2.class);
 
+			// FilterRegistration.Dynamic filterReg =
+			// handler.getServletContext().addFilter("awsxrayfilter",
+			// new AWSXRayServletFilter("EXAMPLE_CALC"));
+			// filterReg.addMappingForServletNames(null, false,
+			// "dispatcherServlet");
+
 		} catch (Exception e) {
 			// if we fail here. We re-throw the exception to force another cold
 			// start

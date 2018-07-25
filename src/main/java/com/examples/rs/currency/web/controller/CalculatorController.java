@@ -41,6 +41,9 @@ public class CalculatorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
 
+	private static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+	private static DynamoDBMapper mapper = new DynamoDBMapper(client);
+
 	@Autowired
 	CalculatorService service;
 
@@ -57,6 +60,28 @@ public class CalculatorController {
 		return new ResponseEntity<Integer>(service.add(a, b), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/calculator/warmSleep/{ms}", method = {
+			RequestMethod.GET }, produces = "application/hal+json")
+
+	public ResponseEntity<String> warmSleep(@PathVariable int ms, HttpServletRequest request) {
+
+		logger.debug("starts");
+
+		logger.info("Example CalculatorProcessor (/warm), ");
+
+		logger.info("Example CalculatorProcessor (/warmSleep), sleeping for {} ms ", ms);
+		try {
+			Thread.sleep(ms);
+		} catch (Exception e) {
+			logger.error("interupted ", e);
+		}
+
+		logger.info("I am up and running ");
+
+		return new ResponseEntity<String>("warmed", HttpStatus.OK);
+
+	}
+
 	@RequestMapping(value = "/calculator/warm", method = { RequestMethod.GET }, produces = "application/hal+json")
 
 	public ResponseEntity<String> warmer(HttpServletRequest request) {
@@ -65,9 +90,7 @@ public class CalculatorController {
 
 		logger.info("Example CalculatorProcessor (/warm), ");
 
-		AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
-
-		Item item = getItem(client);
+		Item item = getItem(client, mapper);
 		if (item != null) {
 
 			boolean shouldSpin = (item.getActiveInstances() < item.getTargetInstances());
@@ -76,19 +99,19 @@ public class CalculatorController {
 			if (shouldSpin) {
 				logger.info("invoking increment active instances for {} ", item);
 
-				item = incrementItem(client, item);
+				item = incrementItem(client, item, mapper);
 				shouldSpin = (item.getActiveInstances() < item.getTargetInstances());
 			}
 			while (shouldSpin) {
-				logger.info("waiting for other lambdas to warm up {} ", item);
+				logger.info("waiting for other lambdas to warm12 up {} ", item);
 
 				try {
-					this.wait(10);
+					Thread.sleep(500);
 				} catch (Exception e) {
-
+					logger.error("interupted ", e);
 				}
 
-				item = getItem(client);
+				item = getItem(client, mapper);
 				shouldSpin = (item.getActiveInstances() < item.getTargetInstances());
 				// logic to exit... wait for finite amount of time
 			}
@@ -99,8 +122,7 @@ public class CalculatorController {
 		return new ResponseEntity<String>("warmed", HttpStatus.OK);
 	}
 
-	private Item getItem(AmazonDynamoDB client) {
-		DynamoDBMapper mapper = new DynamoDBMapper(client);
+	private Item getItem(AmazonDynamoDB client, DynamoDBMapper mapper) {
 
 		logger.info("Attempting to read the item...");
 
@@ -112,7 +134,7 @@ public class CalculatorController {
 
 	}
 
-	private Item incrementItem(AmazonDynamoDB client, Item item) {
+	private Item incrementItem(AmazonDynamoDB client, Item item, DynamoDBMapper mapper) {
 		boolean updated = false;
 
 		while (!updated) {
@@ -120,10 +142,10 @@ public class CalculatorController {
 
 			try {
 				item.setActiveInstances(item.getActiveInstances() + 1);
-				saveItem(client, item);
+				saveItem(client, item, mapper);
 				updated = true;
 			} catch (Exception e) {
-				item = getItem(client);
+				item = getItem(client, mapper);
 				logger.error("error updating active instance", e);
 			}
 		}
@@ -132,8 +154,7 @@ public class CalculatorController {
 		return item;
 	}
 
-	private void saveItem(AmazonDynamoDB client, Item item) {
-		DynamoDBMapper mapper = new DynamoDBMapper(client);
+	private void saveItem(AmazonDynamoDB client, Item item, DynamoDBMapper mapper) {
 		logger.info("Updating the item...");
 
 		// Save the item.
