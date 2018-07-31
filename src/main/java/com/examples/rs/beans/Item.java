@@ -5,6 +5,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBVersionAttribute;
 
+/**
+ * 
+ * @author
+ *
+ */
 @DynamoDBTable(tableName = "Lambda_Warmer")
 public class Item {
 
