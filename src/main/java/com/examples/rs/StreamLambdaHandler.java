@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.servlet.FilterRegistration;
+
 import com.amazonaws.serverless.proxy.internal.testutils.Timer;
 import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.serverless.proxy.spring.SpringLambdaContainerHandler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
+import com.amazonaws.xray.javax.servlet.AWSXRayServletFilter;
 
 public class StreamLambdaHandler implements RequestStreamHandler {
 	private static SpringLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
@@ -21,11 +24,9 @@ public class StreamLambdaHandler implements RequestStreamHandler {
 			System.out.println("environment = " + environmentName);
 			handler = SpringLambdaContainerHandler.getAwsProxyHandler(ExampleApplication2.class);
 
-			// FilterRegistration.Dynamic filterReg =
-			// handler.getServletContext().addFilter("awsxrayfilter",
-			// new AWSXRayServletFilter("EXAMPLE_CALC"));
-			// filterReg.addMappingForServletNames(null, false,
-			// "dispatcherServlet");
+			FilterRegistration.Dynamic filterReg = handler.getServletContext().addFilter("awsxrayfilter",
+					new AWSXRayServletFilter("EXAMPLE_CALC"));
+			filterReg.addMappingForUrlPatterns(null, false, "/*");
 
 		} catch (Exception e) {
 			// if we fail here. We re-throw the exception to force another cold

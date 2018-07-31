@@ -1,5 +1,6 @@
 package com.examples.rs.currency.web.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 import com.amazonaws.services.dynamodbv2.model.GetItemResult;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.examples.rs.beans.Item;
+import com.examples.rs.beans.WarmResponse;
 import com.examples.rs.business.CalculatorService;
 
 /**
@@ -43,6 +45,9 @@ public class CalculatorController {
 
 	private static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
 	private static DynamoDBMapper mapper = new DynamoDBMapper(client);
+
+	private static Date lastAccess = null;
+	private static String containerId = null;
 
 	@Autowired
 	CalculatorService service;
@@ -60,35 +65,79 @@ public class CalculatorController {
 		return new ResponseEntity<Integer>(service.add(a, b), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/calculator/warmSleep/{ms}", method = {
-			RequestMethod.GET }, produces = "application/hal+json")
+	@RequestMapping(value = "/calculator/warm/{id}", method = { RequestMethod.GET }, produces = "application/hal+json")
 
-	public ResponseEntity<String> warmSleep(@PathVariable int ms, HttpServletRequest request) {
+	public ResponseEntity<WarmResponse> warm(@PathVariable int id, HttpServletRequest request) {
 
 		logger.debug("starts");
 
-		logger.info("Example CalculatorProcessor (/warm), ");
+		if (lastAccess == null) {
+			if (containerId == null) {
+				containerId = id + '_' + String.valueOf(new Date().getTime());
+			}
+			logger.info("Example CalculatorProcessor (/warm),containerId {}, id {}", containerId, id);
 
-		logger.info("Example CalculatorProcessor (/warmSleep), sleeping for {} ms ", ms);
-		try {
-			Thread.sleep(ms);
-		} catch (Exception e) {
-			logger.error("interupted ", e);
+			lastAccess = new Date();
+			logger.info("I am up and running id {}", id);
+			return new ResponseEntity<WarmResponse>(new WarmResponse(containerId, id, true, lastAccess), HttpStatus.OK);
+		} else {
+			logger.info("Example CalculatorProcessor (/warm),containerId {}, id {}", containerId, id);
+
+			lastAccess = new Date();
+			logger.info("I am up and running id {}", id);
+			return new ResponseEntity<WarmResponse>(new WarmResponse(containerId, id, false, lastAccess),
+					HttpStatus.OK);
 		}
+	}
 
-		logger.info("I am up and running ");
+	@RequestMapping(value = "/calculator/warmSleep/{id}/{ims}/{sms}", method = {
+			RequestMethod.GET }, produces = "application/hal+json")
 
-		return new ResponseEntity<String>("warmed", HttpStatus.OK);
+	public ResponseEntity<WarmResponse> warmSleep(@PathVariable int ims, @PathVariable int sms, @PathVariable int id,
+			HttpServletRequest request) {
+
+		logger.debug("starts");
+
+		if (lastAccess == null) {
+
+			if (containerId == null) {
+				containerId = id + '_' + String.valueOf(new Date().getTime());
+			}
+			logger.info("Example CalculatorProcessor (/warmSleep),containerId {}, invocationId {} sleeping for {} ms ",
+					containerId, id, ims);
+			try {
+				Thread.sleep(ims);
+			} catch (Exception e) {
+				logger.error("interupted ", e);
+			}
+
+			logger.info("I am up and running id {}", id);
+
+			lastAccess = new Date();
+			return new ResponseEntity<WarmResponse>(new WarmResponse(containerId, id, true, lastAccess), HttpStatus.OK);
+		} else {
+			lastAccess = new Date();
+			try {
+				Thread.sleep(sms);
+			} catch (Exception e) {
+				logger.error("interupted ", e);
+			}
+
+			logger.info("I am up and running id {}", id);
+
+			return new ResponseEntity<WarmResponse>(new WarmResponse(containerId, id, false, lastAccess),
+					HttpStatus.OK);
+		}
 
 	}
 
-	@RequestMapping(value = "/calculator/warm", method = { RequestMethod.GET }, produces = "application/hal+json")
+	@RequestMapping(value = "/calculator/warmdb", method = { RequestMethod.GET }, produces = "application/hal+json")
 
 	public ResponseEntity<String> warmer(HttpServletRequest request) {
 
 		logger.debug("starts");
 
-		logger.info("Example CalculatorProcessor (/warm), ");
+		logger.info("Example CalculatorProcessor (/warmdb), ");
 
 		Item item = getItem(client, mapper);
 		if (item != null) {
