@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example</groupId>
-	<artifactId>calculatorRestAppJava</artifactId>
+	<groupId>com.errabelli.lambda.spring</groupId>
+	<artifactId>calculatorRestAppSpring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>spring-boot-lambda</name>
-	<description>example spring-boot lambda functions</description>
+	<name>spring-lambda</name>
+	<description>example Rest API lambda application using Spring container</description>
 
 	<properties>
     	<maven.build.timestamp.format>yyyy-MM-dd-HH-mm-ss</maven.build.timestamp.format>
@@ -18,7 +18,7 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-		<serviceName>calculatorRestAppJava</serviceName>
+		<serviceName>calculatorRestAppSpring</serviceName>
 		<spring.version>5.0.3.RELEASE</spring.version> 
         <junit.version>4.12</junit.version> 
         <log4j.version>2.8.2</log4j.version> 
@@ -124,6 +124,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>${serviceName}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
