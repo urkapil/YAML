@@ -27,10 +27,7 @@
           "run_instance_count": null,
           "timeout": 0,
           "tasks": [
-            {
-              "type": "Custom Command"
-          
-            }
+            
              {
               "type": "exec",
               "run_if": "passed",
