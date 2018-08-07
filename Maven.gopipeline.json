@@ -31,7 +31,7 @@
              {
               "type": "exec",
               "run_if": "any",
-              "command": "mvn clean compile",
+              "command": "mvn clean compile"
                
             }
           ]
