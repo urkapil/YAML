@@ -1,7 +1,12 @@
 {
   "format_version" : 1,
   "name": "maven_lambda",
-  "environment_variables": [],
+  "environment_variables": [
+  {
+      "name": "JAVA_HOME",
+      "value": "C:\Program Files\Java\jdk1.8.0_181"
+    }
+  ],
   "group" : "Lambda_maven",
   "materials": [
     {
