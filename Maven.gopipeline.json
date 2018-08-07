@@ -29,7 +29,8 @@
           "tasks": [
             {
               "type": "Custom Command"
-              "Command": "mvn clean package"
+              "Command": "mvn"
+              "Arguements": "clean package"
           
             }
           ]
