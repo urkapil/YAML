@@ -29,10 +29,19 @@
           "tasks": [
             {
               "type": "Custom Command"
-              "Command": "mvn"
-              "Arguements": "clean package"
           
             }
+             {
+              "type": "exec",
+              "run_if": "passed",
+              "on_cancel" : null,
+              "command": "mvn",
+              "arguments": [
+                "clean",
+                "package"
+              ],
+              "working_directory": null
+            },
           ]
         }
       ]
