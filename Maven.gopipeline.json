@@ -31,11 +31,8 @@
              {
               "type": "exec",
               "run_if": "any",
-              "command": "mvn",
-              "arguments": [
-                "clean",
-                "package"
-              ],
+              "command": "mvn clean compile",
+ 
               "working_directory": null
             },
           ]
