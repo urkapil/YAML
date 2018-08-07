@@ -33,7 +33,7 @@
               "run_if": "any",
               "command": "mvn clean compile",
                
-            },
+            }
           ]
         }
       ]
