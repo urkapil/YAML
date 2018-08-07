@@ -28,7 +28,9 @@
           "timeout": 0,
           "tasks": [
             {
-              "type": "maven"
+              "type": "Custom Command"
+              "Command": "mvn clean package"
+          
             }
           ]
         }
