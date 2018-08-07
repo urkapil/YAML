@@ -3,7 +3,7 @@
   "name": "maven_lambda",
   "environment_variables": [
   {
-      "name": "JAVA_HOME",
+      "name": "JRE_HOME",
       "value": "C:\Program Files\Java\jre1.8.0_181"
     }
   ],
