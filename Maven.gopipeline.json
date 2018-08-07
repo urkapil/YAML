@@ -32,7 +32,7 @@
               "type": "exec",
               "run_if": "any",
               "command": "mvn clean compile",
-               "working_directory": null
+               
             },
           ]
         }
