@@ -2,7 +2,7 @@
   "format_version" : 1,
   "name": "maven_lambda",
   "environment_variables": [],
-  "group" : "Lambda",
+  "group" : "Lambda_maven",
   "materials": [
     {
       "url": "https://github.com/imsankar/lambda_yaml.git",
