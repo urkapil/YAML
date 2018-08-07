@@ -30,8 +30,7 @@
             
              {
               "type": "exec",
-              "run_if": "passed",
-              "on_cancel" : null,
+              "run_if": "any",
               "command": "mvn",
               "arguments": [
                 "clean",
