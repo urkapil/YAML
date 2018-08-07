@@ -5,7 +5,7 @@
   "group" : "configrepo-example",
   "materials": [
     {
-      "url": "https://github.com/tomzo/gocd-json-config-example.git",
+      "url": "https://github.com/imsankar/lambda_yaml.git",
       "type": "git"
     }
   ],
@@ -28,7 +28,7 @@
           "timeout": 0,
           "tasks": [
             {
-              "type": "rake"
+              "type": "maven"
             }
           ]
         }
