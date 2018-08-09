@@ -18,4 +18,4 @@ pipelines:
             artifacts:
                - build:
                    source: target/calculatorRestAppSpring.jar
-                   destination: binaries
+                  
