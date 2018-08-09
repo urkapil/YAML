@@ -17,5 +17,5 @@ pipelines:
                    command: mvn clean package
             artifacts:
                - build:
-                   source: target/calculatorRestAppSpring.jar
+                   source: target
                   
