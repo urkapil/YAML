@@ -20,6 +20,8 @@ pipelines:
             Maven: 
               tasks:
                - exec: # indicates type of task
+                  run_if: any
+                   working_directory: Maven
                    command: mvn clean package
               artifacts:
                - build:
