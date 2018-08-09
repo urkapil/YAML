@@ -25,9 +25,9 @@ pipelines:
                - build:
                    source: target/*.jar
                    destination: binaries
-                artifacts:
+               artifacts:
                - build:
-                   source: terraform/*.tf
+                   source: **/terraform/*.tf
                    destination: binaries
               
                   
