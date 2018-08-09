@@ -25,6 +25,5 @@ pipelines:
                - build:
                    source: target/*.jar
                    destination: binaries
-                artifacts:
-             
+              
                   
