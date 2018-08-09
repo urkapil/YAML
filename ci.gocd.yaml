@@ -24,7 +24,7 @@ pipelines:
                    command: mvn clean package
               artifacts:
                - build:
-                   source: target/*.jar
+                   source: Maven/target/*.jar
                    destination: binaries
                - build:
                    source: terraform/*.tf
