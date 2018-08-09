@@ -15,3 +15,7 @@ pipelines:
               tasks:
                - exec: # indicates type of task
                    command: mvn clean package
+            artifacts:
+               - build:
+                   source: target/
+                   destination: build
