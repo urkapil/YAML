@@ -1,0 +1,15 @@
+# simple.gocd.yaml
+pipelines:
+  YAML_build:
+    group: yaml_pipelines
+    materials:
+      mygit:  # this is the name of material
+        # says about type of material and url at once
+        git: https://github.com/imsankar/YAML.git
+    stages:
+      - build: 
+          jobs:
+            Maven: 
+              tasks:
+               - exec: # indicates type of task
+                   command: mvn clean package
