@@ -12,16 +12,16 @@ pipelines:
       terraform:  # this is the name of material
         # says about type of material and url at once
         git: https://github.com/imsankar/Terraform.git
-    #stages:
-     # - build: 
-         # jobs:
-          #  Maven: 
-             # tasks:
-              # - exec: # indicates type of task
-             #  working_directory: dir
-            #       command: mvn clean package
-            #  artifacts:
-             #  - build:
-              #     source: target/*.jar
-              #     destination: binaries
+    stages:
+      - build: 
+          jobs:
+            Maven: 
+              tasks:
+               - exec: # indicates type of task
+               working_directory: dir
+                   command: mvn clean package
+              artifacts:
+               - build:
+                   source: target/*.jar
+                   destination: binaries
                   
