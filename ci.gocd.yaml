@@ -17,6 +17,6 @@ pipelines:
                    command: mvn clean package
               artifacts:
                - build:
-                   source: target/
-                   destination: build
+                   source: target/*.jar
+                   destination: binaries
                   
