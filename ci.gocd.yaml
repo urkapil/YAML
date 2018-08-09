@@ -5,11 +5,11 @@ pipelines:
     environment_variables:
       JAVA_HOME: C:\Program Files\Java\jdk1.8.0_181
     materials:
-      mygit:  # this is the name of material
+      code:  # this is the name of material
         # says about type of material and url at once
         git: https://github.com/imsankar/YAML.git
         materials:
-      mygit:  # this is the name of material
+      terraform:  # this is the name of material
         # says about type of material and url at once
         git: https://github.com/imsankar/Terraform.git
     #stages:
