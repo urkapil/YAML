@@ -18,7 +18,7 @@ pipelines:
             Maven: 
               tasks:
                - exec: # indicates type of task
-               working_directory: dir
+     
                    command: mvn clean package
               artifacts:
                - build:
