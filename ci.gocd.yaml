@@ -15,13 +15,6 @@ pipelines:
               tasks:
                - exec: # indicates type of task
                    command: mvn clean package
-     stages: # list of stages in order
-      - build: # name of stage
-          clean_workspace: false
-          jobs:
-            Maven: # name of the job
-              resources:
-               - nMaven
               artifacts:
                - build:
                    source: target/
