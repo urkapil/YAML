@@ -29,9 +29,9 @@ pipelines:
                - build:
                    source: terraform/*.tf
                    destination: binaries #published artifacts
-      - release:
+      - terraform plan:
           jobs:
-            terraform_apply:
+            terraform_plan:
               tasks:
                - fetch:
                    pipeline: YAML_build
@@ -41,7 +41,7 @@ pipelines:
                    destination: binaries/ #fetching artifacts
                - exec:
                   command: echo terraform plan
-      - release:
+      - terraform apply:
           approval:
             type: manual
             roles:
