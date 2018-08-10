@@ -29,9 +29,9 @@ pipelines:
                - build:
                    source: terraform/*.tf
                    destination: binaries
-        - Terraform:
+        - Release:
           jobs:
-            apply:
+            terraform_apply:
               tasks:
               - fetch:
                    pipeline: YAML_build
