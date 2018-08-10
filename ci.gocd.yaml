@@ -29,5 +29,17 @@ pipelines:
                - build:
                    source: terraform/*.tf
                    destination: binaries
+        - Terraform:
+          jobs:
+            apply:
+              tasks:
+              - fetch:
+                   pipeline: YAML_build
+                   stage: build
+                   job: Maven
+                   source: binaries/
+                   destination: binaries/
+               - exec:
+                  command: terraform apply -var-file=variable.tf
               
                   
