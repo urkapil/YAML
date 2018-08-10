@@ -15,20 +15,20 @@ pipelines:
         git: https://github.com/imsankar/Terraform.git
         destination: terraform
     stages:
-      - build: 
-          jobs:
-            Maven: 
-              tasks:
-               - exec: # indicates type of task
-                   working_directory: Maven
-                   command: mvn clean package
-              artifacts:
-               - build:
-                   source: Maven/target/*.jar
-                   destination: binaries
-               - build:
-                   source: terraform/*.tf
-                   destination: binaries #published artifacts
+      #- build: 
+      #    jobs:
+       #     Maven: 
+        #      tasks:
+         #      - exec: # indicates type of task
+          #         working_directory: Maven
+           #        command: mvn clean package
+            #  artifacts:
+             #  - build:
+              #     source: Maven/target/*.jar
+               #    destination: binaries
+               #- build:
+                #   source: terraform/*.tf
+                 #  destination: binaries #published artifacts
         - Release:
           jobs:
             terraform_apply:
