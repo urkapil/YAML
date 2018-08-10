@@ -29,7 +29,7 @@ pipelines:
                - build:
                    source: terraform/*.tf
                    destination: binaries #published artifacts
-        - release:
+      - release:
           jobs:
             terraform_apply:
               tasks:
