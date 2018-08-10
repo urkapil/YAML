@@ -15,30 +15,30 @@ pipelines:
         git: https://github.com/imsankar/Terraform.git
         destination: terraform
     stages:
-      #- build: 
-      #    jobs:
-       #     Maven: 
-        #      tasks:
-         #      - exec: # indicates type of task
-          #         working_directory: Maven
-           #        command: mvn clean package
-            #  artifacts:
-             #  - build:
-              #     source: Maven/target/*.jar
-               #    destination: binaries
-               #- build:
-                #   source: terraform/*.tf
-                 #  destination: binaries #published artifacts
-        - Release:
+      - build: 
+          jobs:
+            Maven: 
+              tasks:
+               - exec: # indicates type of task
+                   working_directory: Maven
+                   command: mvn clean package
+              artifacts:
+               - build:
+                   source: Maven/target/*.jar
+                   destination: binaries
+               - build:
+                   source: terraform/*.tf
+                   destination: binaries #published artifacts
+        - release:
           jobs:
             terraform_apply:
               tasks:
-              #- fetch:
-               #    pipeline: YAML_build
-                #   stage: build
-                 #  job: Maven
-                  # source: binaries/
-                   # destination: binaries/
+              - fetch:
+                   pipeline: YAML_build
+                   stage: build
+                   job: Maven
+                   source: binaries/
+                   destination: binaries/ #fetching artifacts
                - exec:
                   command: terraform apply -var-file=variable.tf
     
