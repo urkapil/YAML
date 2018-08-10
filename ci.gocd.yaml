@@ -38,7 +38,7 @@ pipelines:
                 #   stage: build
                  #  job: Maven
                   # source: binaries/
-                   #destination: binaries/
+                   # destination: binaries/
                - exec:
                   command: terraform apply -var-file=variable.tf
     
