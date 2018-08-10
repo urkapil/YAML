@@ -39,8 +39,8 @@ pipelines:
                    job: Maven
                    source: binaries/
                    destination: binaries/
-               - exec:
-                  command: terraform apply -var-file=variable.tf
+             #  - exec:
+              #    command: terraform apply -var-file=variable.tf
     
               
                   
