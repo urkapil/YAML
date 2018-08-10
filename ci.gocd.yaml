@@ -33,7 +33,7 @@ pipelines:
           jobs:
             terraform_apply:
               tasks:
-              - fetch:
+               - fetch:
                    pipeline: YAML_build
                    stage: build
                    job: Maven
