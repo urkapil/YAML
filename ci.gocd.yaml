@@ -29,6 +29,7 @@ pipelines:
                - build:
                    source: terraform/*.tf
                    destination: binaries
+      stages:
         - Release:
           jobs:
             terraform_apply:
