@@ -33,14 +33,14 @@ pipelines:
           jobs:
             terraform_apply:
               tasks:
-              - fetch:
-                   pipeline: YAML_build
-                   stage: build
-                   job: Maven
-                   source: binaries/
-                   destination: binaries/
-             #  - exec:
-              #    command: terraform apply -var-file=variable.tf
+              #- fetch:
+               #    pipeline: YAML_build
+                #   stage: build
+                 #  job: Maven
+                  # source: binaries/
+                   #destination: binaries/
+               - exec:
+                  command: terraform apply -var-file=variable.tf
     
               
                   
