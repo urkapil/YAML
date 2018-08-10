@@ -40,7 +40,22 @@ pipelines:
                    source: binaries/
                    destination: binaries/ #fetching artifacts
                - exec:
-                  command: echo terraform apply
-    
-              
-                  
+                  command: echo terraform plan
+      - release:
+          approval:
+            type: manual
+            roles:
+                - administrator
+            users:
+                - administrator
+          jobs:
+            terraform_apply:
+              tasks:
+               - fetch:
+                   pipeline: YAML_build
+                   stage: build
+                   job: Maven
+                   source: binaries/
+                   destination: binaries/ #fetching artifacts
+               - exec:
+                  command: echo terraform apply            
