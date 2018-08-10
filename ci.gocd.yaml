@@ -28,8 +28,8 @@ pipelines:
                    destination: binaries
                - build:
                    source: terraform/*.tf
-                   destination: binaries
-      stages:
+                   destination: binaries #published artifacts
+  
         - Release:
           jobs:
             terraform_apply:
