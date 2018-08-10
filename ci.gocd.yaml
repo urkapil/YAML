@@ -40,7 +40,7 @@ pipelines:
                    source: binaries/
                    destination: binaries/ #fetching artifacts
                - exec:
-                  command: terraform apply -var-file=variable.tf
+                  command: echo terraform apply
     
               
                   
