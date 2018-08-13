@@ -29,6 +29,12 @@ pipelines:
                - build:
                    source: terraform/*.tf
                    destination: binaries #published artifacts
+            myupstream:
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: YAML_build
+        stage: terraform_plan
+      
       - terraform_plan:
           jobs:
             terraform_plan:
