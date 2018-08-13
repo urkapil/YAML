@@ -34,7 +34,7 @@ pipelines:
         # type: dependency
         pipeline: YAML_build
         stage: terraform_plan
-      
+      -stages:
       - terraform_plan:
           jobs:
             terraform_plan:
